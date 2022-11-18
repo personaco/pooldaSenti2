@@ -77,9 +77,7 @@ public class JsCallJava {
                 Object result=currMethod.invoke(null,values);
                 // 回调处理
                 String callbackName = callJson.optString("callback");
-                if(callbackName == null){
-                }
-                else{
+                if(callbackName != null){
                     TaskExecutor.scheduleTaskOnUiThread(0, new Runnable() {
                         @Override
                         public void run() {

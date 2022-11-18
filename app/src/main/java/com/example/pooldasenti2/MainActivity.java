@@ -32,23 +32,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        webView = (WebView) findViewById(R.id.webview);
+        webView = findViewById(R.id.webview);
         //WebView加载web资源
         webView.loadUrl(HOST);
 
         //启用支持javascript
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-        //设置 缓存模式
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        //开启 DOM storage API 功能
         settings.setDomStorageEnabled(true);
-        //支持中文，否则页面中中文显示乱码
         webView.getSettings().setDefaultTextEncodingName("UTF-8");
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
-            //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
+            //웹 페이지를 열 수 있도록 타사 또는 시스템 기본 브라우저를 사용하여 웹 페이지를 여는 WebView의 기본 동작을 재정의
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // TODO Auto-generated method stub
                 //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
@@ -60,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 // TODO Auto-generated method stub
                 super.onPageStarted(view, url, favicon);
-                dialog = ProgressDialog.show(MainActivity.this, null, "页面加载中，请稍后..");
+                dialog = ProgressDialog.show(MainActivity.this, null, "Loading...");
             }
 
             @Override
@@ -72,24 +69,18 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                }
                 super.onReceivedError(view, errorCode, description, failingUrl);
             }
 
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) { // Handle the error
-                if (error != null) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    }
-                }
 
                 dialog.dismiss();
 
                 AlertDialog alert = new AlertDialog.Builder(MainActivity.this).create();
-                alert.setTitle("提示"); // 设置对话框的标题
+                alert.setTitle("알림"); // 대화제목
                 //alert.setMessage("加载失败！"); // 设置要显示的内容
-                alert.setButton(DialogInterface.BUTTON_POSITIVE, "刷新",
+                alert.setButton(DialogInterface.BUTTON_POSITIVE, "새로고침",
                         new DialogInterface.OnClickListener() {
 
                             @Override
@@ -98,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
                                 webView.loadUrl(HOST);
                             }
                         });
-                alert.setButton(DialogInterface.BUTTON_NEGATIVE, "关闭",
+                alert.setButton(DialogInterface.BUTTON_NEGATIVE, "닫기",
                         new DialogInterface.OnClickListener() {
 
                             @Override
